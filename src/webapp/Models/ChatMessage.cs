@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace dotnetfashionassistant.Models
 {
@@ -27,5 +28,16 @@ namespace dotnetfashionassistant.Models
         /// Gets or sets the timestamp when the message was created.
         /// </summary>
         public DateTime Timestamp { get; set; }
+        
+        /// <summary>
+        /// Gets or sets the list of product IDs associated with this message.
+        /// Used for displaying product images when relevant.
+        /// </summary>
+        public List<int> ProductIds { get; set; } = new List<int>();
+        
+        /// <summary>
+        /// Gets or sets a value indicating whether the message should show product images.
+        /// </summary>
+        public bool ShowProductImages { get; set; } = false;
     }
 }

@@ -31,13 +31,13 @@ namespace dotnetfashionassistant.Models
                 Price = 89.99m,
                 SizeInventory = new Dictionary<string, int>
                 {
-                    { "XS", 0 },
-                    { "S", 0 },
-                    { "M", 0 },
-                    { "L", 0 },
-                    { "XL", 0 },
-                    { "XXL", 0 },
-                    { "XXXL", 0 }
+                    { "XS", 1 },
+                    { "S", 2 },
+                    { "M", 3 },
+                    { "L", 1 },
+                    { "XL", 4 },
+                    { "XXL", 1 },
+                    { "XXXL", 3 }
                 }
             };
               // White & Navy Blue Shirt

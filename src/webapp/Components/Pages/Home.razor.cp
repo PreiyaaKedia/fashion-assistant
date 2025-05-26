@@ -471,7 +471,8 @@
             .Replace("\n", "<br>")
             .Replace("•", "<br>•");
     }
-      private ChatMessage ProcessAgentResponse(string aiResponse)
+    
+    private ChatMessage ProcessAgentResponse(string aiResponse)
     {
         // Format the response for better HTML display
         string formattedResponse = FormatAgentResponse(aiResponse);
@@ -484,47 +485,16 @@
             Timestamp = DateTime.Now 
         };
         
-        // Check if the response contains product information (prices and sizes)
+        // Check if the response contains product information
         if (ContainsProductInformation(aiResponse))
         {
-            // Find which products are mentioned in the response
-            var mentionedProductIds = FindMentionedProducts(aiResponse);
+            chatMessage.ShowProductImages = true;
             
-            if (mentionedProductIds.Any())
-            {
-                chatMessage.ShowProductImages = true;
-                chatMessage.ProductIds.AddRange(mentionedProductIds);
-            }
+            // Add all product IDs to the message
+            chatMessage.ProductIds.AddRange(products.Select(p => p.Id));
         }
         
         return chatMessage;
-    }
-    
-    private List<int> FindMentionedProducts(string response)
-    {
-        List<int> mentionedProductIds = new List<int>();
-        string responseToLower = response.ToLower();
-        
-        // Check each product to see if it's mentioned in the response
-        foreach (var product in products)
-        {
-            // Look for product name mentions in the response
-            // Using ToLower for case-insensitive matching
-            string productNameLower = product.Name.ToLower();
-            
-            // Look for the product name or parts of it that would uniquely identify it
-            if (responseToLower.Contains(productNameLower) || 
-                // Check for key distinctive parts of product names
-                (product.Name.Contains("Navy Blazer") && responseToLower.Contains("navy blazer")) ||
-                (product.Name.Contains("White & Navy Blue") && responseToLower.Contains("white and navy")) ||
-                (product.Name.Contains("Red Slim Fit") && responseToLower.Contains("red checked")) ||
-                (product.Name.Contains("Denim Jacket") && responseToLower.Contains("denim jacket")))
-            {
-                mentionedProductIds.Add(product.Id);
-            }
-        }
-        
-        return mentionedProductIds;
     }
     
     private bool ContainsProductInformation(string response)
